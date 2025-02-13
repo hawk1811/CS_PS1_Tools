@@ -1,57 +1,61 @@
-# CrowdStrike PowerShell Tools Collection
+# CrowdStrike Registry Configuration Script
 
-Welcome to the CrowdStrike PowerShell Tools Collection repository. This repository contains various tools and scripts to help manage and maintain CrowdStrike Falcon deployments across different platforms.
+This PowerShell script manages CrowdStrike proxy configuration settings in the Windows Registry. It allows you to set or update the proxy hostname and port for CrowdStrike services.
 
-## Available Projects
+## Features
 
-### 1. CrowdStrike Sensor Deployment Check Scripts
-LINK: [Check Host Status and Connectivity Branch](https://github.com/hawk1811/CS_PS1_Tools/tree/Check-Host-Status-and-Connectivity)
+- Configures CrowdStrike proxy settings in the Windows Registry
+- Command-line parameters for easy configuration
+- Automatic registry path creation if it doesn't exist
+- Comprehensive logging of all operations
+- Validates and updates existing registry values if they differ from specified values
 
-A collection of scripts for Windows, macOS, and Linux that help verify system readiness for CrowdStrike Falcon sensor deployment. These scripts perform:
-- Pre-deployment environment validation
-- Certificate and TLS verification
-- Connectivity checks for CrowdStrike cloud regions
-- Existing sensor detection
-- Support for multiple regions (US-1, US-2, EU-1)
+## Prerequisites
 
-Visit the branch for detailed documentation and usage instructions.
+- Windows operating system
+- Administrative privileges
+- PowerShell 5.1 or higher
 
-## Coming Soon
+## Usage
 
-More tools and scripts will be added to this repository to help with:
-- Sensor management
-- Configuration automation
-- Deployment optimization
-- Performance monitoring
-- Troubleshooting utilities
+Run the script with administrative privileges using the following command:
 
-## Repository Structure
+```powershell
+.\Set-CrowdStrikeProxy.ps1 -IP "10.50.71.60" -PORT 8443
+```
 
-Each tool/project is maintained in its own branch to keep the codebase organized and allow for independent development and maintenance. This structure enables users to access specific tools without downloading the entire repository.
+### Parameters
 
-## Contributing
+- `-IP`: The proxy hostname or IP address (Required)
+- `-PORT`: The proxy port number (Required)
 
-We welcome contributions! If you have ideas for new tools or improvements to existing ones:
+## Logging
 
-1. Create a new branch for your feature
-2. Develop and test your changes
-3. Submit a pull request with a clear description of your changes
+The script logs all operations to a file located at:
+```
+%TEMP%\CS\RegistryLog.txt
+```
+
+Each log entry includes a timestamp and details about the operation performed.
+
+## Registry Configuration
+
+The script manages the following registry values under the specified path:
+```
+HKLM:\SYSTEM\CrowdStrike\{9b03c1d9-3138-44ed-9fae-d9f4c034b88d}\{16e0423f-7058-48c9-a204-725362b67639}\Default
+```
+
+- `CsProxyHostname` (String)
+- `CsProxyPort` (DWord)
+
+## Error Handling
+
+The script includes comprehensive error handling and will:
+- Create the registry path if it doesn't exist
+- Log warnings for non-existent registry values
+- Log errors if operations fail
+- Continue processing remaining values if one operation fails
 
 ## License
 
-This project is released under the MIT License.
-
-## Support
-
-If you encounter any issues or have questions:
-1. Check the specific tool's documentation in its branch
-2. Create an issue in the repository
-3. Provide detailed information about your environment and the problem
-
-## Stay Updated
-
-Star and watch this repository to stay informed about new tools and updates!
-
-## Disclaimer
-
-These tools are provided as-is, without warranty of any kind. Always test in a non-production environment first.
+This project is licensed under the MIT License - see the LICENSE file for details.
