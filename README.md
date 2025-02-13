@@ -1,57 +1,33 @@
-# CrowdStrike PowerShell Tools Collection
+# Test_Detections.ps1
 
-Welcome to the CrowdStrike PowerShell Tools Collection repository. This repository contains various tools and scripts to help manage and maintain CrowdStrike Falcon deployments across different platforms.
+## Overview
 
-## Available Projects
+`Test_Detections.ps1` is a PowerShell script designed to test various connectivity and system operations, both locally and remotely. It performs a series of checks and actions, including testing connectivity to specific IP addresses, accessing URLs, and attempting to stop certain processes.
 
-### 1. CrowdStrike Sensor Deployment Check Scripts
-LINK: [Check Host Status and Connectivity Branch](https://github.com/hawk1811/CS_PS1_Tools/tree/Check-Host-Status-and-Connectivity)
+## Features
 
-A collection of scripts for Windows, macOS, and Linux that help verify system readiness for CrowdStrike Falcon sensor deployment. These scripts perform:
-- Pre-deployment environment validation
-- Certificate and TLS verification
-- Connectivity checks for CrowdStrike cloud regions
-- Existing sensor detection
-- Support for multiple regions (US-1, US-2, EU-1)
+- **Connectivity Testing**: Checks connectivity to a predefined list of IP addresses.
+- **URL Access Testing**: Attempts to access specific URLs.
+- **Process Management**: Tries to stop a specific process (`CSFalconService`).
+- **Remote Execution**: Optionally executes the same checks on a remote machine.
 
-Visit the branch for detailed documentation and usage instructions.
+## Usage
 
-## Coming Soon
+### Prerequisites
 
-More tools and scripts will be added to this repository to help with:
-- Sensor management
-- Configuration automation
-- Deployment optimization
-- Performance monitoring
-- Troubleshooting utilities
+- PowerShell (version 5.1 or later recommended)
+- Administrative privileges may be required for certain operations
 
-## Repository Structure
+### Parameters
 
-Each tool/project is maintained in its own branch to keep the codebase organized and allow for independent development and maintenance. This structure enables users to access specific tools without downloading the entire repository.
+- `-RemoteIP <IP_Address>`: The IP address of the remote machine (required if `-NoRemote` is not used).
+- `-RemoteUser <domain\user>`: The username for the remote machine in `domain\user` or `Remote_Hostname\User` format (required if `-NoRemote` is not used).
+- `-RemotePass <password>`: The password for the remote machine (required if `-NoRemote` is not used).
+- `-NoRemote`: Flag to run the script locally without remote execution.
 
-## Contributing
+### Running the Script
 
-We welcome contributions! If you have ideas for new tools or improvements to existing ones:
+#### With Remote Connection
 
-1. Create a new branch for your feature
-2. Develop and test your changes
-3. Submit a pull request with a clear description of your changes
-
-## License
-
-This project is released under the MIT License.
-
-## Support
-
-If you encounter any issues or have questions:
-1. Check the specific tool's documentation in its branch
-2. Create an issue in the repository
-3. Provide detailed information about your environment and the problem
-
-## Stay Updated
-
-Star and watch this repository to stay informed about new tools and updates!
-
-## Disclaimer
-
-These tools are provided as-is, without warranty of any kind. Always test in a non-production environment first.
+```powershell
+.\Test_Detections.ps1 -RemoteIP <IP_Address> -RemoteUser <domain\user> -RemotePass <password>
